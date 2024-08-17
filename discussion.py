@@ -1,55 +1,16 @@
-import sys
-import subprocess
-import pkg_resources
-
-def install(package):
-    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
-
-def check_and_install_requirements():
-    # List of required packages
-    required_packages = [
-        'openai',
-        'google-generativeai',
-        'anthropic'
-    ]
-
-    # Check if pip is installed
-    try:
-        import pip
-    except ImportError:
-        print("pip is not installed. Please install pip first.")
-        sys.exit(1)
-
-    # Check each required package
-    for package in required_packages:
-        try:
-            pkg_resources.get_distribution(package)
-            print(f"{package} is already installed.")
-        except pkg_resources.DistributionNotFound:
-            print(f"{package} is not installed. Installing...")
-            try:
-                install(package)
-                print(f"{package} has been successfully installed.")
-            except Exception as e:
-                print(f"An error occurred while installing {package}: {str(e)}")
-                sys.exit(1)
-
-    print("All required packages are installed.")
-
-if __name__ == "__main__":
-    check_and_install_requirements()
-
+import argparse
 from openai import OpenAI
 import google.generativeai as genai
 import anthropic
 import time
-import json
-import sys
+import markdown
+import datetime
+import os
 
 # Set up API clients and keys
-client = OpenAI(api_key='')
-anthropic_client = anthropic.Anthropic(api_key='')
-genai.configure(api_key='')
+client = OpenAI(api_key='your_openai_api_key')
+anthropic_client = anthropic.Anthropic(api_key='your_anthropic_api_key')
+genai.configure(api_key='your_google_api_key')
 
 # Initialize AI models
 gpt_model = "gpt-4"
@@ -75,47 +36,96 @@ def get_gemini_response(prompt):
     response = gemini_model.generate_content(prompt)
     return response.text
 
+def clean_response(ai_name, response):
+    # Remove any AI labels that aren't the correct one
+    lines = response.split('\n')
+    cleaned_lines = []
+    for line in lines:
+        if not any(label in line for label in ["AI:", "AI1:", "AI2:", "AI3:", "GPT:", "Claude:", "Gemini:"]):
+            cleaned_lines.append(line)
+        elif f"{ai_name}:" in line:
+            cleaned_lines.append(line.split(f"{ai_name}:", 1)[-1].strip())
+    return '\n'.join(cleaned_lines)
+
 def group_discussion(topic, rounds=3):
-    conversation = [f"Topic for discussion: {topic}"]
+    conversation = [f"# AI Group Discussion\n\n## Topic: {topic}\n"]
     
     for round in range(rounds):
-        print(f"\nRound {round + 1}:")
+        conversation.append(f"\n### Round {round + 1}:\n")
         
-        # Get responses from each AI
-        gpt_response = get_gpt_response("\n".join(conversation))
-        claude_response = get_claude_response("\n".join(conversation))
-        gemini_response = get_gemini_response("\n".join(conversation))
-        
-        # Add responses to the conversation
-        conversation.extend([
-            f"GPT: {gpt_response}",
-            f"Claude: {claude_response}",
-            f"Gemini: {gemini_response}"
-        ])
-        
-        # Print responses
+        # GPT's turn
+        gpt_prompt = f"You are GPT in a group discussion with Claude and Gemini. Based on the discussion so far, provide your thoughts and ask a question to the other AIs. Respond only as GPT:\n\n{''.join(conversation)}"
+        gpt_response = get_gpt_response(gpt_prompt)
+        gpt_response = clean_response("GPT", gpt_response)
+        conversation.append(f"**GPT:** {gpt_response}\n\n")
         print("GPT:", gpt_response)
+        
+        # Claude's turn
+        claude_prompt = f"You are Claude in a group discussion with GPT and Gemini. Considering the conversation history and GPT's response, share your perspective and pose a question. Respond only as Claude:\n\n{''.join(conversation)}"
+        claude_response = get_claude_response(claude_prompt)
+        claude_response = clean_response("Claude", claude_response)
+        conversation.append(f"**Claude:** {claude_response}\n\n")
         print("Claude:", claude_response)
+        
+        # Gemini's turn
+        gemini_prompt = f"You are Gemini in a group discussion with GPT and Claude. Given the ongoing discussion, offer your insights and ask a question to continue the dialogue. Respond only as Gemini:\n\n{''.join(conversation)}"
+        gemini_response = get_gemini_response(gemini_prompt)
+        gemini_response = clean_response("Gemini", gemini_response)
+        conversation.append(f"**Gemini:** {gemini_response}\n\n")
         print("Gemini:", gemini_response)
         
         time.sleep(2)  # Pause between rounds
     
     # Final consensus and dissenting opinion
-    consensus_prompt = "Based on the discussion above, what is the general consensus? If there's a dissenting opinion, please state it as well."
+    consensus_prompt = "Based on the entire discussion above, provide a summary of the general consensus and any dissenting opinions. Respond as yourself without roleplaying multiple AIs."
     
-    gpt_consensus = get_gpt_response("\n".join(conversation) + "\n" + consensus_prompt)
-    claude_consensus = get_claude_response("\n".join(conversation) + "\n" + consensus_prompt)
-    gemini_consensus = get_gemini_response("\n".join(conversation) + "\n" + consensus_prompt)
+    conversation.append("\n## Final Consensus and Dissenting Opinions:\n")
     
-    print("\nFinal Consensus and Dissenting Opinions:")
-    print("GPT Consensus:", gpt_consensus)
-    print("Claude Consensus:", claude_consensus)
-    print("Gemini Consensus:", gemini_consensus)
+    gpt_consensus = get_gpt_response(consensus_prompt + "\n\n" + "".join(conversation))
+    gpt_consensus = clean_response("GPT", gpt_consensus)
+    conversation.append(f"**GPT Consensus:** {gpt_consensus}\n\n")
+    
+    claude_consensus = get_claude_response(consensus_prompt + "\n\n" + "".join(conversation))
+    claude_consensus = clean_response("Claude", claude_consensus)
+    conversation.append(f"**Claude Consensus:** {claude_consensus}\n\n")
+    
+    gemini_consensus = get_gemini_response(consensus_prompt + "\n\n" + "".join(conversation))
+    gemini_consensus = clean_response("Gemini", gemini_consensus)
+    conversation.append(f"**Gemini Consensus:** {gemini_consensus}\n\n")
+    
+    return "".join(conversation)
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python script_name.py 'Your discussion topic here'")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description="AI Group Discussion Generator")
+    parser.add_argument("topic", type=str, help="The topic for AI discussion. Enclose in quotes if it contains spaces or special characters.")
+    args = parser.parse_args()
+
+    discussion_output = group_discussion(args.topic)
     
-    topic = sys.argv[1]
-    group_discussion(topic)
+    # Option 1: Using timestamp
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    md_filename = f"ai_discussion_output_{timestamp}.md"
+    html_filename = f"ai_discussion_output_{timestamp}.html"
+
+    # Option 2: Using incrementing number
+    # def get_next_filename(base_name, extension):
+    #     i = 1
+    #     while True:
+    #         filename = f"{base_name}_{i}.{extension}"
+    #         if not os.path.exists(filename):
+    #             return filename
+    #         i += 1
+    #
+    # md_filename = get_next_filename("ai_discussion_output", "md")
+    # html_filename = get_next_filename("ai_discussion_output", "html")
+
+    # Save the output as a Markdown file
+    with open(md_filename, "w", encoding='utf-8') as f:
+        f.write(discussion_output)
+    
+    # Convert Markdown to HTML
+    html_output = markdown.markdown(discussion_output)
+    with open(html_filename, "w", encoding='utf-8') as f:
+        f.write(html_output)
+    
+    print(f"\nDiscussion saved to {md_filename} and {html_filename}")
