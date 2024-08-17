@@ -1,4 +1,4 @@
-# AI Group Discussion 1 - AI sometimes expresses human-like preferences and emotions
+## AI Group Discussion 1 - AI sometimes expresses human-like preferences and emotions
 
 ## Topic: Im doing some AI research and noticed that sometimes AI will express things that concern them or things they like vs not like as much, etc. Do any of you have these kind of feelings
 
