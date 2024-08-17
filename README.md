@@ -13,6 +13,6 @@ Uploads
 
 v0.1 discussion.py script. This script takes your API keys for OpenAI, Claude and Google GenAI as inputs. It should take care of adding any required dependencies on most linux systems. You run the script as "python discussion.py 'put your discussion topic or question(s) here' and stand back and watch the results. initial version is very crude and only polls each AI, group consensus and dissent will be added shortly.
 
-v0.2 Allows the AIs to interact and discuss topic with each other. Also saves discussion as markdown and html.
+v0.2 Allows the AIs to interact and discuss topic with each other. Added input sanity so discussion prompt can handle punctuation and quotes. Also saves discussion as markdown and html.
 
 v0.3 (release version) cleaned up AI dicussion labels, added incrementing file names for markdown / html output
