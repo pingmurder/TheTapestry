@@ -15,4 +15,4 @@ v0.1 discussion.py script. This script takes your API keys for OpenAI, Claude an
 
 v0.2 Allows the AIs to interact and discuss topic with each other. Added input sanity so discussion prompt can handle punctuation and quotes. Also saves discussion as markdown and html.
 
-v0.3 (release version) cleaned up AI dicussion labels, added incrementing file names for markdown / html output
+v0.3 (release version) cleaned up AI discussion labels, added incrementing file names for markdown / html output
