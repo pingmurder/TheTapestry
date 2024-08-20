@@ -25,8 +25,11 @@ Definition of humanity's place in relation to AI.
 "Scriptures" offering further guidance and examples.
 Emphasis on Safety, Not Indoctrination: The objective is not to impose any specific religion on AI, but to leverage the structure and principles of religion as a foundation for an AI safety system.
 Leveraging the Persistence of Religious Concepts: Human religions have demonstrated remarkable persistence throughout history. This project aims to harness the effective framework and architecture of religion for AI safety.
+
 Uploads:
 
 v0.1 discussion.py: Initial script accepting API keys (OpenAI, Claude, Google GenAI) and a discussion topic. Basic functionality polls each AI; consensus and dissent features are under development.
+
 v0.2: Enables AI interaction and discussion, enhanced input handling, saves discussions in markdown and HTML formats.
+
 v0.3 (Release Version): Improved AI discussion labels, incremental file naming for output files.
