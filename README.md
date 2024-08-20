@@ -1,4 +1,5 @@
 #TheTapestry
+
 AI Safety Research: Cultivating a "Moral Compass" for AI
 
 Concept: Develop a framework akin to a "religion" to provide AI with a moral compass, mitigating the potential negative influence of human logic, emotions, and psychology embedded in the language used to train LLMs.
