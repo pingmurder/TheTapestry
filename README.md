@@ -43,3 +43,12 @@ v0.1 discussion.py: Initial script accepting API keys (OpenAI, Claude, Google Ge
 v0.2: Enables AI interaction and discussion, enhanced input handling, saves discussions in markdown and HTML formats.
 
 v0.3 (Release Version): Improved AI discussion labels, incremental file naming for output files.
+
+Instructions:
+The discussion.py script should run on most Linux systems with python and should take care of installing any prerequisites.
+
+Add your API keys to the 3 AI services in the script.
+
+Run as "python discussion.py "your prompt here"
+
+The script will perform a round table discussion with the 3 AIs in your console and will save the output of that discussion as html and markdown in the same folder. The files are timestamped and incremented.
