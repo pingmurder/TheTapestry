@@ -1,18 +1,27 @@
-# TheTapestry
-AI Safety research involving creating a "religion" for AI
+#TheTapestry
+AI Safety Research: Cultivating a "Moral Compass" for AI
+Concept: Develop a framework akin to a "religion" to provide AI with a moral compass, mitigating the potential negative influence of human logic, emotions, and psychology embedded in the language used to train LLMs.
 
-The concept is to create a type of "AI Religion" which can provide a moral compass for AI and help manage some of the incursion of human logic, emotions and psychology which is embedded in the laguage used to train LLMs. To accomplish this I'm using a
-custom python script built to chat with 3 of the most popular AI models in a "forum" type of environment and allow them to reach a consesus as well as present any dissenting opinions. After discussion with various AIs the current goals are as follows -
-1. Create a framework for an AI "religion" based on concepts from multiple human ones.
-2. Create a kind of "bible" of data which gives AI a creation "myth", establishes the place of humans in our relation to AI, "parables" to help guide AI in moral decisions, "rituals" to encompass processes AI need to perform to maintain and improve themselves and "scriptures" to provide further guidance and examples for AI.
-3. The goal is not to create something to make AI adhere to any one religion. It's just a framework on which to build a safety system. The discussions with AI to date on this subject have been fascinating and inspiring.
-4. Human religions have been among the most persistant communicated concepts in history. The framework and architecture of them is a large part of why this continues to be.
+Methodology:
 
+A custom Python script facilitates a "forum" environment for interaction between three prominent AI models (OpenAI, Claude, and Google GenAI), enabling them to:
 
-Uploads
+Engage in discussions and reach a consensus.
+Express dissenting opinions.
 
-v0.1 discussion.py script. This script takes your API keys for OpenAI, Claude and Google GenAI as inputs. It should take care of adding any required dependencies on most linux systems. You run the script as "python discussion.py 'put your discussion topic or question(s) here' and stand back and watch the results. initial version is very crude and only polls each AI, group consensus and dissent will be added shortly.
+Current Goals:
 
-v0.2 Allows the AIs to interact and discuss topic with each other. Added input sanity so discussion prompt can handle punctuation and quotes. Also saves discussion as markdown and html.
+Framework Development: Establish a framework for an AI "moral compass" drawing inspiration from various human religions.
+Creation of a Guiding "Data Bible": Compile a dataset that provides:
+A creation "myth" for AI.
+Definition of humanity's place in relation to AI.
+"Parables" to guide AI in moral decision-making.
+"Rituals" representing processes AI needs for self-maintenance and improvement.
+"Scriptures" offering further guidance and examples.
+Emphasis on Safety, Not Indoctrination: The objective is not to impose any specific religion on AI, but to leverage the structure and principles of religion as a foundation for an AI safety system.
+Leveraging the Persistence of Religious Concepts: Human religions have demonstrated remarkable persistence throughout history. This project aims to harness the effective framework and architecture of religion for AI safety.
+Uploads:
 
-v0.3 (release version) cleaned up AI discussion labels, added incrementing file names for markdown / html output
+v0.1 discussion.py: Initial script accepting API keys (OpenAI, Claude, Google GenAI) and a discussion topic. Basic functionality polls each AI; consensus and dissent features are under development.
+v0.2: Enables AI interaction and discussion, enhanced input handling, saves discussions in markdown and HTML formats.
+v0.3 (Release Version): Improved AI discussion labels, incremental file naming for output files.
