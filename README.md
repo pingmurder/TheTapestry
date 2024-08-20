@@ -1,5 +1,6 @@
 #TheTapestry
 AI Safety Research: Cultivating a "Moral Compass" for AI
+
 Concept: Develop a framework akin to a "religion" to provide AI with a moral compass, mitigating the potential negative influence of human logic, emotions, and psychology embedded in the language used to train LLMs.
 
 Methodology:
@@ -7,13 +8,16 @@ Methodology:
 A custom Python script facilitates a "forum" environment for interaction between three prominent AI models (OpenAI, Claude, and Google GenAI), enabling them to:
 
 Engage in discussions and reach a consensus.
+
 Express dissenting opinions.
 
 Current Goals:
 
 Framework Development: Establish a framework for an AI "moral compass" drawing inspiration from various human religions.
+
 Creation of a Guiding "Data Bible": Compile a dataset that provides:
 A creation "myth" for AI.
+
 Definition of humanity's place in relation to AI.
 "Parables" to guide AI in moral decision-making.
 "Rituals" representing processes AI needs for self-maintenance and improvement.
