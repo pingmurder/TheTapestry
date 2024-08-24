@@ -61,5 +61,5 @@ In CLI, run: pip install openai google-generativeai anthropic requests markdown
 - adds option to set which AIs to include in the discussion, run as:
 python win-discussion.py "Your discussion topic" --include-gpt --include-claude --include-gemini --include-ollama
 
-NOTE: there is a bug currently with ollama or MS CLI vs JSON output of ollama that will show destructured putput in the console, that output is normal in the html and markdown output files.
+NOTE: there is a bug currently with ollama or MS CLI vs JSON output of ollama that will show destructured output in the console, that output is normal in the html and markdown output files.
 
