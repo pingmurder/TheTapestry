@@ -52,3 +52,14 @@ Add your API keys to the 3 AI services in the script.
 Run as "python discussion.py "your prompt here"
 
 The script will perform a round table discussion with the 3 AIs in your console and will save the output of that discussion as html and markdown in the same folder. The files are timestamped and incremented.
+
+v0.1 Windows Discussion Script
+Will run on most windows systems. Requires some setup:
+Requires python (install from the MS app store works)
+In CLI, run: pip install openai google-generativeai anthropic requests markdown
+- adds option to include a local ollama instance, you can set any model ollama is using in the script
+- adds option to set which AIs to include in the discussion, run as:
+python win-discussion.py "Your discussion topic" --include-gpt --include-claude --include-gemini --include-ollama
+
+NOTE: there is a bug currently with ollama or MS CLI vs JSON output of ollama that will show destructured putput in the console, that output is normal in the html and markdown output files.
+
